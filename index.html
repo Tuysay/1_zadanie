@@ -18,12 +18,11 @@ initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
 
 <div id="app">
-    <product></product>
-    <product></product>
-    <product></product>
-
+    <div class="cart">
+        <p>Cart({{ cart }})</p>
+    </div>
+    <product :premium="premium" @add-to-cart="updateCart"></product>
 </div>
-
 <!--<div id="app">-->
 <!--    <div class="product">-->
 <!--        <div class="product-image">-->

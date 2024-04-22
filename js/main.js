@@ -17,6 +17,7 @@ Vue.component('product', {
             <ul>
                 <li v-for="detail in details">{{ detail }}</li>
             </ul>
+            <p>Shipping: {{ shipping }}</p>
             <div
                     class="color-box"
                     v-for="(variant, index) in variants"
@@ -70,13 +71,14 @@ Vue.component('product', {
         },
 
     methods: {
-    addToCart() {
-        this.cart += 1
-    },
-    updateProduct(index) {
-        this.selectedVariant = index;
-        console.log(index);
-    }
+
+        addToCart() {
+            this.$emit('add-to-cart');
+        },
+        updateProduct(index) {
+            this.selectedVariant = index;
+            console.log(index);
+        }
 
     },
     computed: {
@@ -88,11 +90,34 @@ Vue.component('product', {
         },
         inStock(){
             return this.variants[this.selectedVariant].variantQuantity
-        }
-    },
+        },
+        shipping() {
+            if (this.premium) {
+                return "Free";
+            } else {
+                return 2.99
+            }
+        },
+    }
 
 
 })
+
+
+
+let app = new Vue({
+    el: '#app',
+    data: {
+        premium: true,
+        cart: 0
+    },
+    methods: {
+        updateCart() {
+            this.cart += 1;
+        }
+    }
+})
+
 //
 // let app = new Vue({
 //     el: '#app',
@@ -143,12 +168,7 @@ Vue.component('product', {
 //
 // })
 
-let app = new Vue({
-    el: '#app',
-    data: {
-        premium: true
-    }
-})
+
 
 
 // image: "./assets/vmSocks-green-onWhite.jpg",
