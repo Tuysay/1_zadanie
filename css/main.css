@@ -34,9 +34,10 @@ img {
 }
 
 .color-box {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     margin-top: 5px;
+    border-radius: 8px;
 }
 .cart {
     margin-top: 50px;
@@ -62,7 +63,7 @@ button {
 }
 
 .del_but{
-    margin-right: 400px;
+    margin-right: 70%;
 }
 .buttons-container {
     display: flex;
