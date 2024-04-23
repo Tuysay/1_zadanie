@@ -93,4 +93,47 @@ textarea {
     flex-direction: row;
 }
 
+.review-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+.review-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.review-form input[type="text"],
+.review-form textarea,
+.review-form select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+
+.radit{
+    display: flex;
+    width: 15%;
+    flex-direction: column;
+}
+
+.radit label{
+    margin-top: -30px;
+    margin-left: 60px;
+}
+
+.review-form input[type="submit"] {
+    background-color: #4CAF50;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+}
 
