@@ -20,12 +20,10 @@ Vue.component("product", {
             <h1>{{ title }}</h1>
             <p>{{ description }}</p>
             <a :href="link">More products like this.</a>
-            <ul>
-                <li v-for="detail in details">{{ detail }}</li>
-            </ul>
+            
             <p v-if="inStock">In stock</p>
             <p v-else>Out of Stock</p>
-            <p>Shipping: {{ shipping }}</p>
+            
             <p :class="{ productInfoOutOfStock: !inStock }" v-else>Out of Stock</p>
             <span v-if="sale">On Sale</span>
             <span v-else>Not On Sale</span>
@@ -41,6 +39,7 @@ Vue.component("product", {
             <ul v-for="size in sizes">
                 <li>{{ size }}</li>
             </ul>
+          
             <button
                     v-on:click="addToCart"
                     :disabled="!inStock"
@@ -61,8 +60,8 @@ Vue.component("product", {
             altText: "A pair of socks",
             link: "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=socks",
             inventory: 100,
-            details: ['80% cotton', '20% polyester',
-                'Gender-neutral'],
+            // details: ['80% cotton', '20% polyester',
+            //     'Gender-neutral'],
             variants: [
                 {
                     variantId: 2234,
@@ -113,13 +112,14 @@ Vue.component("product", {
         sale() {
             return this.variants[this.selectedVariant].onSale;
         },
-        shipping() {
-            if (this.premium) {
-                return "Free";
-            } else {
-                return 2.99
-            }
-        }
+        // shipping() {
+        //     if (this.premium) {
+        //         return "Free";
+        //     } else {
+        //         return 2.99;
+        //     }
+        // }
+
 
     },
 });
@@ -230,16 +230,51 @@ Vue.component("product-tabs", {
        <div v-show="selectedTab === 'Make a Review'">
          <product-review></product-review>
        </div>
+        <div v-show="selectedTab === 'Details'">
+         <product_details></product_details>
+       </div>
+       <div v-show="selectedTab === 'Shipping'">
+         <product_shipping></product_shipping>
+       </div
  
 `,
     data() {
         return {
-            tabs: ["Reviews", "Make a Review"],
+            tabs: ["Reviews", "Make a Review", "Details", "Shipping"],
             selectedTab: "Reviews",
         };
     },
 });
 
+Vue.component("product_details", {
+    template: `
+            <div>
+                <ul>
+                    <li v-for="detail in details">{{ detail }}</li>
+                </ul>
+            </div>
+    `,
+    data() {
+        return {
+            details: ["80% cotton", "20% polyester", "Gender-neutral"],
+        };
+    },
+});
+
+Vue.component("product_shipping", {
+    template: `
+     <p>Shipping: {{ shipping }}</p>
+    `,
+    computed: {
+        shipping() {
+            if (this.premium) {
+                return "Free";
+            } else {
+                return 2.99;
+            }
+        },
+    },
+});
 
 
 let app = new Vue({
