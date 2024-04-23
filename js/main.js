@@ -40,14 +40,16 @@ Vue.component("product", {
                 <li>{{ size }}</li>
             </ul>
           
-            <button
-                    v-on:click="addToCart"
-                    :disabled="!inStock"
-                    :class="{ disabledButton: !inStock }"
+          <div class="buttons-container">
+          <button
+            v-on:click="addToCart"
+            :disabled="!inStock"
+            :class="{ disabledButton: !inStock }"
             >
                 Add to cart
-            </button>
-            <button v-on:click="deleteFromCart">Delete from cart</button>
+          </button>
+        <button class="del_but" v-on:click="deleteFromCart">Delete from cart</button>
+        </div>
         </div>
         <product-tabs :reviews="reviews"></product-tabs>
 </div>
@@ -161,7 +163,7 @@ Vue.component("product-review", {
         </div>
       
     </p>
-    <p>
+    <p class="text_submit">
     <input  type="submit" value="Submit">
     </p>
 </form>
@@ -215,10 +217,10 @@ Vue.component("product-tabs", {
                @click="selectedTab = tab"
          >{{ tab }}</span>
        </ul>
-       <div v-show="selectedTab === 'Reviews'">
-         <p v-if="!reviews.length">There are no reviews yet.</p>
+       <div class="li_rev" v-show="selectedTab === 'Reviews'">
+         <p v-if="!reviews.length">There are no reviews yet.</p><br>
          <ul>
-           <li v-for="review in reviews">
+           <li  v-for="review in reviews">
               <p>Name: {{ review.name }}</p>
               <p>Rating: {{ review.rating }}</p>
               <p>Review:{{ review.review }}</p>
@@ -234,7 +236,7 @@ Vue.component("product-tabs", {
        </div>
        <div v-show="selectedTab === 'Shipping'">
          <product_shipping></product_shipping>
-       </div
+       </div>
  
 `,
     data() {
@@ -247,7 +249,7 @@ Vue.component("product-tabs", {
 
 Vue.component("product_details", {
     template: `
-            <div>
+            <div class="li_rev">
                 <ul>
                     <li v-for="detail in details">{{ detail }}</li>
                 </ul>
@@ -262,7 +264,7 @@ Vue.component("product_details", {
 
 Vue.component("product_shipping", {
     template: `
-     <p>Shipping: {{ shipping }}</p>
+     <p class="li_rev">Shipping: {{ shipping }}</p>
     `,
     computed: {
         shipping() {
