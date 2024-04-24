@@ -129,45 +129,46 @@ Vue.component("product", {
 
 Vue.component("product-review", {
     template: `
-<form class="review-form" @submit.prevent="onSubmit">
+<template>
+  <form class="review-form" @submit.prevent="onSubmit">
     <p v-if="errors.length">
-        <b>Please correct the following error(s):</b>
-        <ul>
-            <li v-for="error in errors">{{ error }}</li>
-        </ul>
+      <b>Please correct the following error(s):</b>
+      <ul>
+        <li v-for="error in errors">{{ error }}</li>
+      </ul>
     </p>
     <p>
-        <label for="name">Name:</label>
-        <input id="name" v-model="name" placeholder="name">
+      <label for="name">Name:</label>
+      <input id="name" v-model="name" placeholder="name">
     </p>
     <p>
-        <label for="review">Review:</label>
-        <textarea id="review" v-model="review"></textarea>
+      <label for="review">Review:</label>
+      <textarea id="review" v-model="review"></textarea>
     </p>
     <p>
-        <label for="rating">Rating:</label>
-        <select id="rating" v-model.number="rating">
-            <option>5</option>
-            <option>4</option>
-            <option>3</option>
-            <option>2</option>
-            <option>1</option>
-        </select>
+      <label for="rating">Rating:</label>
+      <select id="rating" v-model.number="rating">
+        <option>5</option>
+        <option>4</option>
+        <option>3</option>
+        <option>2</option>
+        <option>1</option>
+      </select>
     </p>
     <p>
-<!--    <label for="choice">Would you recommend this product?:</label>-->
-<!--        <div class="radit">-->
-<!--            <input type="radio" id="yes" name="choice" v-model="choice" value="yes"/>-->
-<!--            <label for="yes">yes</label>-->
-<!--            <input type="radio" id="no" name="choice" v-model="choice" value="no" />-->
-<!--            <label for="no">no</label>-->
-<!--        </div>-->
-      
+      <label for="choice">Would you recommend this product:</label>
+      <div class="radit">
+        <input type="radio" id="yes" name="choice" v-model="choice" value="yes" :disabled="rating < 4"/>
+        <label for="yes">yes</label>
+        <input type="radio" id="no" name="choice" v-model="choice" value="no" :disabled="rating < 4"/>
+        <label for="no">no</label>
+      </div>
+<!--     сделать избранное атрибутом которое по  умолчанию  фолз и при клике будет  тру-->
     </p>
     <p class="text_submit">
-    <input  type="submit" value="Submit">
+      <input type="submit" value="Submit">
     </p>
-</form>
+  </form>
 `,
     data() {
         return {
@@ -186,6 +187,7 @@ Vue.component("product-review", {
                 this.choice = "yes";
             }
         },
+
     },
 
     methods: {
@@ -202,6 +204,7 @@ Vue.component("product-review", {
                 this.review = null;
                 this.rating = null;
                 this.choice = null;
+                this.favourites = null;
             } else {
                 if (!this.name) this.errors.push("Name required.");
                 if (!this.review) this.errors.push("Review required.");
@@ -234,15 +237,17 @@ Vue.component("product-tabs", {
          <p v-if="!reviews.length">There are no reviews yet.</p><br>
          <ul>
            <li  v-for="review in reviews">
-                      <div class="rating-area">
-          
-                <input type="radio" id="star-1" name="rating" value="1">
-                <label for="star-1" title="Оценка «1»"></label>
-            </div>
+<!--                      <div class="rating-area">-->
+<!--          -->
+<!--                <input type="radio" id="star-1" name="rating" value="1">-->
+<!--                <label for="star-1" title="Оценка «1»"></label>-->
+<!--            </div>-->
+
               <p>Name: {{ review.name }}</p>
               <p>Rating: {{ review.rating }}</p>
               <p>Review:{{ review.review }}</p>
               <p>Choice: {{ review.choice }}</p>
+              <p>Name: {{ review.favourites }}</p>
            </li>
 
          </ul>
