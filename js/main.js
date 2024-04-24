@@ -16,6 +16,7 @@ Vue.component("product", {
 <div class="product-image">
 <img :src="image" :alt="altText"/>
 </div>
+
         <div class="product-info">
             <h1>{{ title }}</h1>
             <p>{{ description }}</p>
@@ -233,12 +234,19 @@ Vue.component("product-tabs", {
          <p v-if="!reviews.length">There are no reviews yet.</p><br>
          <ul>
            <li  v-for="review in reviews">
+                      <div class="rating-area">
+          
+                <input type="radio" id="star-1" name="rating" value="1">
+                <label for="star-1" title="Оценка «1»"></label>
+            </div>
               <p>Name: {{ review.name }}</p>
               <p>Rating: {{ review.rating }}</p>
               <p>Review:{{ review.review }}</p>
               <p>Choice: {{ review.choice }}</p>
            </li>
+
          </ul>
+
        </div>
        <div v-show="selectedTab === 'Make a Review'">
          <product-review></product-review>
@@ -249,6 +257,8 @@ Vue.component("product-tabs", {
        <div v-show="selectedTab === 'Shipping'">
          <product_shipping></product_shipping>
        </div>
+       
+ 
  
 `,
     data() {
