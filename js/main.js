@@ -154,13 +154,13 @@ Vue.component("product-review", {
         </select>
     </p>
     <p>
-    <label for="choice">Would you recommend this product?:</label>
-        <div class="radit">
-            <input type="radio" id="yes" name="choice" v-model="choice" value="yes"/>
-            <label for="yes">yes</label>
-            <input type="radio" id="no" name="choice" v-model="choice" value="no" />
-            <label for="no">no</label>
-        </div>
+<!--    <label for="choice">Would you recommend this product?:</label>-->
+<!--        <div class="radit">-->
+<!--            <input type="radio" id="yes" name="choice" v-model="choice" value="yes"/>-->
+<!--            <label for="yes">yes</label>-->
+<!--            <input type="radio" id="no" name="choice" v-model="choice" value="no" />-->
+<!--            <label for="no">no</label>-->
+<!--        </div>-->
       
     </p>
     <p class="text_submit">
@@ -177,6 +177,16 @@ Vue.component("product-review", {
             errors: [],
         };
     },
+    watch: {
+        rating(newRating) {
+            if (newRating <= 3) {
+                this.choice = "no";
+            } else {
+                this.choice = "yes";
+            }
+        },
+    },
+
     methods: {
         onSubmit() {
             if (this.name && this.review && this.rating && this.choice) {
@@ -197,6 +207,8 @@ Vue.component("product-review", {
                 if (!this.rating) this.errors.push("Rating required.");
                 if (!this.choice) this.errors.push("Choice required.");
             }
+
+
         },
     },
 });
