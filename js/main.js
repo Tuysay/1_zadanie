@@ -163,8 +163,8 @@ Vue.component("product-review", {
         <input type="radio" id="no" name="choice" v-model="choice" value="no" :disabled="rating < 4"/>
         <label for="no">no</label>
       </div>
-<!--     сделать избранное атрибутом которое по  умолчанию  фолз и при клике будет  тру-->
     </p>
+
     <p class="text_submit">
       <input type="submit" value="Submit">
     </p>
@@ -176,6 +176,7 @@ Vue.component("product-review", {
             review: null,
             rating: null,
             choice: null,
+            favourites: false,
             errors: [],
         };
     },
@@ -198,13 +199,14 @@ Vue.component("product-review", {
                     review: this.review,
                     rating: this.rating,
                     choice: this.choice,
+                    favourites: this.favourites,
                 };
                 eventBus.$emit("review-submitted", productReview);
                 this.name = null;
                 this.review = null;
                 this.rating = null;
                 this.choice = null;
-                this.favourites = null;
+                this.favourites = false;
             } else {
                 if (!this.name) this.errors.push("Name required.");
                 if (!this.review) this.errors.push("Review required.");
@@ -236,44 +238,53 @@ Vue.component("product-tabs", {
        <div class="li_rev" v-show="selectedTab === 'Reviews'">
          <p v-if="!reviews.length">There are no reviews yet.</p><br>
          <ul>
-           <li  v-for="review in reviews">
-<!--                      <div class="rating-area">-->
-<!--          -->
-<!--                <input type="radio" id="star-1" name="rating" value="1">-->
-<!--                <label for="star-1" title="Оценка «1»"></label>-->
-<!--            </div>-->
-
+           <li v-for="(review, index) in reviews">
               <p>Name: {{ review.name }}</p>
               <p>Rating: {{ review.rating }}</p>
               <p>Review:{{ review.review }}</p>
               <p>Choice: {{ review.choice }}</p>
-              <p>Name: {{ review.favourites }}</p>
+              <p class="star-checkbox">
+                <label class="star_label" for="favourites">Favourite:</label>
+                <input class="star_input" type="checkbox" id="favourites" v-model="reviews[index].favourites">
+                <span class="star-overlay">★</span>
+              </p>
            </li>
-
          </ul>
-
        </div>
        <div v-show="selectedTab === 'Make a Review'">
          <product-review></product-review>
        </div>
-        <div v-show="selectedTab === 'Details'">
+       <div v-show="selectedTab === 'Details'">
          <product_details></product_details>
        </div>
        <div v-show="selectedTab === 'Shipping'">
          <product_shipping></product_shipping>
        </div>
-       
- 
- 
-`,
+       <div v-show="selectedTab === 'Favorites'">
+         <h2>Favorites</h2>
+         <ul>
+           <li v-for="review in favoriteReviews" :key="review.id">
+              <p>Name: {{ review.name }}</p>
+              <p>Rating: {{ review.rating }}</p>
+              <p>Review: {{ review.review }}</p>
+              <p>Choice: {{ review.choice }}</p>
+           </li>
+         </ul>
+       </div>
+     </div>
+    `,
     data() {
         return {
-            tabs: ["Reviews", "Make a Review", "Details", "Shipping"],
+            tabs: ["Reviews", "Make a Review", "Details", "Shipping", "Favorites"],
             selectedTab: "Reviews",
         };
     },
+    computed: {
+        favoriteReviews() {
+            return this.reviews.filter(review => review.favourites);
+        }
+    }
 });
-
 Vue.component("product_details", {
     template: `
             <div class="li_rev">
@@ -288,6 +299,8 @@ Vue.component("product_details", {
         };
     },
 });
+
+
 
 Vue.component("product_shipping", {
     template: `
